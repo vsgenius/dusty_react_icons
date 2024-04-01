@@ -1,8 +1,8 @@
 import React from 'react';
 import { cnForm } from './Form.classname';
-import type { Dispatch, FC, SetStateAction } from 'react';
+import type { FC } from 'react';
 import { Icon } from '../Icon/Icon';
-import type { IconsType } from '../../App'
+import type { IconsType } from '../ThreeIcons'
 
 import './Form.css';
 
@@ -10,25 +10,19 @@ type FormProps = {
   visible: boolean;
   top: number;
   left: number;
-  setIcons: Dispatch<SetStateAction<IconsType[]>>;
-  setVisible: Dispatch<SetStateAction<boolean>>;
+  addIcons: (icon: IconsType) => void;
+  changeVisible: (value: boolean) => void;
 };
 
-const Form: FC<FormProps> = ({ visible, top, left, setIcons, setVisible }) => {
-
+const Form: FC<FormProps> = ({ visible, top, left, addIcons, changeVisible }) => {
   const handleClick = (event: any) => {
     event.stopPropagation();
-    const target = event.target;
-
-    setIcons((prev: any) => [
-      ...prev,
-      { class: target.className,
-        top: top, 
-        left: left 
-    },
-    ]);
-
-    setVisible(false);
+    addIcons({ 
+      class: event.target.className,
+      top: top, 
+      left: left 
+    });
+    changeVisible(false);
   };
   return (
     <div
